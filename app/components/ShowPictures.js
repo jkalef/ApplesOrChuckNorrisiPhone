@@ -1,0 +1,133 @@
+var React = require('react-native');
+
+var {
+  View,
+  Text,
+  Image,
+  Navigator,
+  TouchableHighlight,
+  AlertIOS,
+} = React;
+
+
+var PictureOption = React.createClass ({
+  _onPress: function() {
+    this.props.onPress(this.props.item);
+  },
+
+  render: function() {
+    return (
+      <TouchableHighlight onPress={this._onPress}>
+        <Image style={styles.image}
+           source={{uri: this.props.item.picture}} />
+      </TouchableHighlight>
+     )
+  }
+});
+
+
+var ShowPictures = React.createClass ({
+  getInitialState: function() {
+    return {}
+  },
+
+  componentWillMount: function() {
+    //console.log('mounting')
+    fetch(`http://1f050dd9.ngrok.com/play/show?${this.props.extension}.json`)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({itemOne: responseData.item_1,
+                       itemTwo: responseData.item_2})
+      });
+
+      // .then(function(json) {
+      //   console.log('request succeeded with json response', json)
+      // }).catch(function(error) {
+      //   debugger
+      //   console.log('request failed', error)
+      // })
+  },
+
+
+  // createComparison: function(selectedItem) {
+  //   var itemOne = this.state.itemOne.id
+  //   var itemTwo = this.state.itemTwo.id
+  //   var otherItem = selectedItem.id == itemOne.id ? itemTwo : itemOne;
+
+  //   fetch(`http://1f050dd9.ngrok.com/play/show/${this.props.extension}/${selectedItem.id}/${otherItem.id}`, {
+  //     method: 'post',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ })
+  //   });
+
+  // },
+
+
+  createComparisonOne: function() {
+    var itemOne = this.state.itemOne.id
+    var itemTwo = this.state.itemTwo.id
+    //var otherItem = selectedItem.id == itemOne.id ? itemTwo : itemOne;
+
+    fetch(`http://1f050dd9.ngrok.com/play/show/${this.props.extension}/${itemOne}/${itemTwo}`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ })
+    });
+  },
+
+
+  renderImages: function() {
+    if (this.state.itemOne && this.state.itemTwo) {
+      return (
+        <View style={styles.imageContainer}>
+          <PictureOption item={this.state.itemOne} onPress={this.createComparisonOne} />
+          <PictureOption item={this.state.itemTwo} onPress={this.createCamparisonTwo} />
+        </View>
+      )
+    } else {
+      return <View />
+    }
+  },
+
+  render: function() {
+    return (
+      <View style={styles.wrapper}>
+          {this.renderImages()}
+      </View>
+      );
+  },
+});
+
+
+var styles = React.StyleSheet.create ({
+  wrapper: {
+    flex: 1,
+    alignItems: 'center'
+  },
+
+  imageContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  text: {
+    textAlign: 'center',
+    fontSize: 20
+  },
+
+  image: {
+    height: 300,
+    width: 300
+  }
+});
+
+
+module.exports = ShowPictures;
+
