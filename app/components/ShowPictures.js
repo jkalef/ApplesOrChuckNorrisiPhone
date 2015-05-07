@@ -33,7 +33,7 @@ var ShowPictures = React.createClass ({
 
   componentWillMount: function() {
     //console.log('mounting')
-    fetch(`http://1f050dd9.ngrok.com/play/show?${this.props.extension}.json`)
+    fetch(`http://4aa88bb3.ngrok.com/play/show?${this.props.extension}.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({itemOne: responseData.item_1,
@@ -49,29 +49,12 @@ var ShowPictures = React.createClass ({
   },
 
 
-  // createComparison: function(selectedItem) {
-  //   var itemOne = this.state.itemOne.id
-  //   var itemTwo = this.state.itemTwo.id
-  //   var otherItem = selectedItem.id == itemOne.id ? itemTwo : itemOne;
-
-  //   fetch(`http://1f050dd9.ngrok.com/play/show/${this.props.extension}/${selectedItem.id}/${otherItem.id}`, {
-  //     method: 'post',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({ })
-  //   });
-
-  // },
-
-
   createComparisonOne: function() {
     var itemOne = this.state.itemOne.id
     var itemTwo = this.state.itemTwo.id
     //var otherItem = selectedItem.id == itemOne.id ? itemTwo : itemOne;
 
-    fetch(`http://1f050dd9.ngrok.com/play/show/${this.props.extension}/${itemOne}/${itemTwo}`, {
+    fetch(`https://77faee71.ngrok.com/play/show/${this.props.extension}/${itemOne}/${itemTwo}`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -79,7 +62,37 @@ var ShowPictures = React.createClass ({
       },
       body: JSON.stringify({ })
     });
+
+    fetch(`https://77faee71.ngrok.com/play/show?${this.props.extension}.json`)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({itemOne: responseData.item_1,
+                       itemTwo: responseData.item_2})
+    });
   },
+
+
+  createComparisonTwo: function() {
+    var itemOne = this.state.itemOne.id
+    var itemTwo = this.state.itemTwo.id
+
+    fetch(`https://77faee71.ngrok.com/play/show/${this.props.extension}/${itemTwo}/${itemOne}`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ })
+    });
+
+    fetch(`https://77faee71.ngrok.com/play/show?${this.props.extension}.json`)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({itemOne: responseData.item_1,
+                       itemTwo: responseData.item_2})
+    });
+  },
+
 
 
   renderImages: function() {
@@ -87,7 +100,7 @@ var ShowPictures = React.createClass ({
       return (
         <View style={styles.imageContainer}>
           <PictureOption item={this.state.itemOne} onPress={this.createComparisonOne} />
-          <PictureOption item={this.state.itemTwo} onPress={this.createCamparisonTwo} />
+          <PictureOption item={this.state.itemTwo} onPress={this.createComparisonTwo} />
         </View>
       )
     } else {

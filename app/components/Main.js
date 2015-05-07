@@ -75,6 +75,5 @@ var Main = React.createClass ({
 
 module.exports = Main;
 
-//<Image source={require('image!my_pic.jpeg')} style={styles.image} />
 
 
