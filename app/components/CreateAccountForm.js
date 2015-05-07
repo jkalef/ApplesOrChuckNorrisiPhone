@@ -48,7 +48,7 @@ var CreateAccountForm = React.createClass({
   onPress: function () {
     var value = this.refs.form.getValue();
     if (value) { 
-        fetch(`http://4779340a.ngrok.com/users`, {
+        fetch(`http://4aa88bb3.ngrok.com/users`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
@@ -62,26 +62,18 @@ var CreateAccountForm = React.createClass({
             password_confirmation: value.confirmPassword
           }
         })
-      });
-      fetch(`http://4779340a.ngrok.com/${value.username}`)
-        .then((response) => response.json())
+      }).then((response) => response.json())
         .then((responseData) => {
-          this.setState({current_user: responseData.user})
-        })
+          var API_KEY = responseData.user.api_key; 
+          AsyncStorage.setItem(API_KEY, responseData.user.api_key)
+            .then(() => console.log(API_KEY))
+            .done();
+          })       
     this.props.navigator.push({
       component: CreateProfile
     });
     }
   },
-
-  createCurrentUserStorage: function() {
-    var API_KEY = this.state.current_user.api_key
-    AsyncStorage.setItem(API_KEY)
-      .done();
-  },
-
-
-  // var CURRENT_USER_KEY = this.state.current_user.api_key;
 
   render: function() {
     return (
