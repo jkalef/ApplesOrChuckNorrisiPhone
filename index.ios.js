@@ -17,6 +17,7 @@ var Main = require('./app/components/Main');
 var ShowPictures = require('./app/components/ShowPictures');
 var CreateAccountForm = require('./app/components/CreateAccountForm');
 var SelectGameMode = require('./app/components/SelectGameMode');
+var CreateProfile = require('./app/components/CreateProfile');
 
 //this is the main component
 var AwesomeProject = React.createClass({
@@ -26,7 +27,7 @@ var AwesomeProject = React.createClass({
         style = {styles.container}
         initialRoute={{
           title: "Apples or Chuck Norris",
-          component: CreateAccountForm
+          component: CreateProfile
         }} />
     );
   }
