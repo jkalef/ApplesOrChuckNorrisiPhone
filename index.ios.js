@@ -27,7 +27,7 @@ var AwesomeProject = React.createClass({
         style = {styles.container}
         initialRoute={{
           title: "Apples or Chuck Norris",
-          component: CreateProfile
+          component: CreateAccountForm
         }} />
     );
   }
