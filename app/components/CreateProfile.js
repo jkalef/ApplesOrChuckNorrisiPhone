@@ -1,7 +1,7 @@
 var React = require('react-native');
+
 var t = require('tcomb-form-native');
 var Main = require('./Main');
-var CreateProfile = require('./CreateProfile');
 
 var { 
   AppRegistry, 
@@ -15,26 +15,22 @@ var {
 
 var Form = t.form.Form;
 
-var User = t.struct({
-  username: t.Str,            
-  email: t.Str, 
-  password: t.Str,
-  confirmPassword: t.Str,    
+var Gender = t.enums({
+  M: 'Male',
+  F: 'Female'
+});
+
+var Profile = t.struct({
+  age: t.maybe(t.Num),            
+  location: t.maybe(t.Str), 
+  //gender: Gender
 });
 
 var options = {
   auto: 'placeholders',
-  fields: {
-    password: {
-      password: true
-    },
-    confirmPassword: {
-      password: true
-    }
-  }
 };
 
-var CreateAccountForm = React.createClass({
+var CreateProfile = React.createClass({
   componentWillMount: function() {
   },
 
@@ -47,23 +43,22 @@ var CreateAccountForm = React.createClass({
   onPress: function () {
     var value = this.refs.form.getValue();
     if (value) { 
-        fetch(`http://4aa88bb3.ngrok.com/users`, {
+        fetch(`http://4aa88bb3.ngrok.com/profiles`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          user: {
-            username: value.username,
-            email: value.email,
-            password: value.password,
-            password_confirmation: value.confirmPassword
+          profile: {
+            age: value.age,
+            location: value.location,
+            //sex: value.gender
           }
         })
       });
     this.props.navigator.push({
-      component: CreateProfile
+      component: Main
     });
     }
   },
@@ -74,12 +69,12 @@ var CreateAccountForm = React.createClass({
         {/* display */}
         <Form
           ref="form"
-          type={User}
+          type={Profile}
           options={options}
-          value={User} >
+          value={Profile} >
         </Form>
         <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Create Account</Text>
+          <Text style={styles.buttonText}>Create Profile</Text>
         </TouchableHighlight>
       </View>
     );
@@ -115,4 +110,5 @@ var styles = React.StyleSheet.create({
   }
 });
 
-module.exports = CreateAccountForm;
+
+module.exports = CreateProfile;
