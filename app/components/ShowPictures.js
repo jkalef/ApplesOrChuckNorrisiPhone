@@ -39,13 +39,6 @@ var ShowPictures = React.createClass ({
         this.setState({itemOne: responseData.item_1,
                        itemTwo: responseData.item_2})
       });
-
-      // .then(function(json) {
-      //   console.log('request succeeded with json response', json)
-      // }).catch(function(error) {
-      //   debugger
-      //   console.log('request failed', error)
-      // })
   },
 
 

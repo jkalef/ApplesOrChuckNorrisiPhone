@@ -10,7 +10,8 @@ var {
   View, 
   TouchableHighlight,
   TextInput,
-  Navigator
+  Navigator,
+  AsyncStorage
 } = React;
 
 var Form = t.form.Form;
@@ -32,7 +33,11 @@ var options = {
 
 var CreateProfile = React.createClass({
   componentWillMount: function() {
-  },
+    AsyncStorage.getItem('API_KEY')
+      .then((apikey) => {
+        this.setState({userKey: apikey})
+      })
+    },
 
 
   getInitialState: function() {
@@ -43,7 +48,7 @@ var CreateProfile = React.createClass({
   onPress: function () {
     var value = this.refs.form.getValue();
     if (value) { 
-        fetch(`http://4aa88bb3.ngrok.com/profiles`, {
+        fetch(`http://4aa88bb3.ngrok.com/api/${this.state.userKey}`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',

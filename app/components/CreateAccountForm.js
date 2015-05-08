@@ -37,6 +37,7 @@ var options = {
 
 var CreateAccountForm = React.createClass({
   componentWillMount: function() {
+    //var API_KEY = "";
   },
 
 
@@ -64,12 +65,12 @@ var CreateAccountForm = React.createClass({
         })
       }).then((response) => response.json())
         .then((responseData) => {
-          var API_KEY = responseData.user.api_key; 
-          AsyncStorage.setItem(API_KEY, responseData.user.api_key)
-            .then(() => console.log(API_KEY))
+          AsyncStorage.setItem('API_KEY', responseData.user.api_key)
+            .then(() => console.log("<<<<<< setting API KEY" + responseData.user.api_key))
+
             .done();
-          })       
-    this.props.navigator.push({
+        });   
+    this.props.navigator.replace({
       component: CreateProfile
     });
     }
