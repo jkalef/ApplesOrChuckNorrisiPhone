@@ -49,7 +49,7 @@ var CreateAccountForm = React.createClass({
   onPress: function () {
     var value = this.refs.form.getValue();
     if (value) { 
-        fetch(`http://4aa88bb3.ngrok.com/users`, {
+        fetch(`http://4779340a.ngrok.com/api/v1/users`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
@@ -66,8 +66,6 @@ var CreateAccountForm = React.createClass({
       }).then((response) => response.json())
         .then((responseData) => {
           AsyncStorage.setItem('API_KEY', responseData.user.api_key)
-            .then(() => console.log("<<<<<< setting API KEY" + responseData.user.api_key))
-
             .done();
         });   
     this.props.navigator.replace({

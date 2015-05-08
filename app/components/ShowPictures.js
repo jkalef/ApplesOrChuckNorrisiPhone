@@ -7,6 +7,7 @@ var {
   Navigator,
   TouchableHighlight,
   AlertIOS,
+  AsyncStorage
 } = React;
 
 
@@ -28,12 +29,16 @@ var PictureOption = React.createClass ({
 
 var ShowPictures = React.createClass ({
   getInitialState: function() {
+    AsyncStorage.getItem('API_KEY')
+      .then((apikey) => {
+        this.setState({userKey: apikey})
+    })
     return {}
   },
 
   componentWillMount: function() {
     //console.log('mounting')
-    fetch(`http://4aa88bb3.ngrok.com/play/show?${this.props.extension}.json`)
+    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({itemOne: responseData.item_1,
@@ -47,7 +52,7 @@ var ShowPictures = React.createClass ({
     var itemTwo = this.state.itemTwo.id
     //var otherItem = selectedItem.id == itemOne.id ? itemTwo : itemOne;
 
-    fetch(`https://77faee71.ngrok.com/play/show/${this.props.extension}/${itemOne}/${itemTwo}`, {
+    fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemOne}/${itemTwo}/${this.state.userKey}`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -56,7 +61,7 @@ var ShowPictures = React.createClass ({
       body: JSON.stringify({ })
     });
 
-    fetch(`https://77faee71.ngrok.com/play/show?${this.props.extension}.json`)
+    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({itemOne: responseData.item_1,
@@ -69,7 +74,7 @@ var ShowPictures = React.createClass ({
     var itemOne = this.state.itemOne.id
     var itemTwo = this.state.itemTwo.id
 
-    fetch(`https://77faee71.ngrok.com/play/show/${this.props.extension}/${itemTwo}/${itemOne}`, {
+    fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -78,7 +83,7 @@ var ShowPictures = React.createClass ({
       body: JSON.stringify({ })
     });
 
-    fetch(`https://77faee71.ngrok.com/play/show?${this.props.extension}.json`)
+    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({itemOne: responseData.item_1,

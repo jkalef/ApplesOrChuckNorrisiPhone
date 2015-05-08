@@ -52,7 +52,7 @@ var PickerItemIOS = PickerIOS.Item;
 var CategoryPicker = React.createClass({
   componentWillMount: function() {
     // React.AlertIOS.alert(this.state.categories.length.toString())
-    fetch(`http://4aa88bb3.ngrok.com/play/categories.json`)
+    fetch(`http://4779340a.ngrok.com/api/v1/play/categories.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({categories: responseData.categories});

@@ -48,7 +48,7 @@ var CreateProfile = React.createClass({
   onPress: function () {
     var value = this.refs.form.getValue();
     if (value) { 
-        fetch(`http://4aa88bb3.ngrok.com/api/${this.state.userKey}`, {
+        fetch(`http://4779340a.ngrok.com/api/v1/profiles/${this.state.userKey}`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
