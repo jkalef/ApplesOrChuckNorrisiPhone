@@ -38,7 +38,7 @@ var ShowPictures = React.createClass ({
 
   componentWillMount: function() {
     //console.log('mounting')
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
+    fetch(`https://77faee71.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({itemOne: responseData.item_1,
@@ -52,7 +52,7 @@ var ShowPictures = React.createClass ({
     var itemTwo = this.state.itemTwo.id
     //var otherItem = selectedItem.id == itemOne.id ? itemTwo : itemOne;
 
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemOne}/${itemTwo}/${this.state.userKey}`, {
+    fetch(`https://77faee71.ngrok.com/api/v1/play/show/${this.props.extension}/${itemOne}/${itemTwo}/${this.state.userKey}`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -61,7 +61,7 @@ var ShowPictures = React.createClass ({
       body: JSON.stringify({ })
     });
 
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
+    fetch(`https://77faee71.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({itemOne: responseData.item_1,
@@ -76,7 +76,7 @@ var ShowPictures = React.createClass ({
 
     if (this.state.itemOne.category_id != 8) {
 
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`, {
+    fetch(`https://77faee71.ngrok.com/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -85,7 +85,7 @@ var ShowPictures = React.createClass ({
       body: JSON.stringify({ })
     });
 
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
+    fetch(`https://77faee71.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({itemOne: responseData.item_1,

@@ -1,7 +1,6 @@
 var React = require('react-native');
 var t = require('tcomb-form-native');
-var Main = require('./Main');
-var CreateProfile = require('./CreateProfile');
+var SelectGameMode = require('./SelectGameMode');
 
 var { 
   AppRegistry, 
@@ -12,7 +11,8 @@ var {
   TextInput,
   Navigator,
   AsyncStorage,
-  AlertIOS
+  AlertIOS,
+  Image
 } = React;
 
 var Form = t.form.Form;
@@ -65,71 +65,107 @@ var SignIn = React.createClass({
         })
       }).then((response) => response.json())
         .then((responseData) => {
-          if (responseData.user.api_key != null) {
             AsyncStorage.setItem('API_KEY', responseData.user.api_key)
               .done();
-          } else {
-              AlertIOS.alert(
-            'Error:',
-            'Invalid username and/or password',
+          //go to game mode component
+          this.props.navigator.replace({
+              component: SelectGameMode
+          });
+        }).catch((error) => AlertIOS.alert(
+            'Sorry',
+            'Invalid Username/Password Combo',
             [
-              {text: 'Ok', onPress: () => console.log('Pressed')},
+              {text: 'Try Again', onPress: () => console.log('Pressed')},
             ]
-          ) 
-          }
-        });   
-    this.props.navigator.replace({
-      component: Main
-    });
-    }
-  },
+          ))       
+        }
+      },
 
   render: function() {
     return (
       <View style={styles.container}>
-        {/* display */}
+       <Image style={styles.backgroundImage} 
+               source={{uri: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS1wKVVbbZKcMRpycAxggnSYCmWT1QViAxMRUfBaV6T-R2erfqH"}}
+               backgroundImage={Image.resizeMode.cover} />
+        <View style={styles.backdropView}>
         <Form
           ref="form"
           type={User}
           options={options}
           value={User} >
         </Form>
-        <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Sign In</Text>
-        </TouchableHighlight>
+        <View style={styles.buttonContainer}>
+          <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>Sign In</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
       </View>
     );
   }
 });
 
 var styles = React.StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    marginTop: 50,
+container: {
     padding: 20,
-    backgroundColor: '#ffffff',
+    marginTop: 30,
+    alignItems: 'center',
   },
-  title: {
-    fontSize: 30,
-    alignSelf: 'center',
-    marginBottom: 30
-  },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center'
-  },
-  button: {
-    height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  }
-});
 
+  title: {
+    fontSize: 18,
+    alignSelf: 'center',
+    marginBottom: 10,
+    fontWeight: 'bold'
+  },
+
+  formContainer: {
+    backgroundColor: 'white'
+  },
+
+  buttonText: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 50,
+    paddingRight: 50,
+    color: 'white',
+    alignSelf: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
+  },
+
+  button: {
+    marginTop: 5,
+    marginLeft: 10,
+    flex: 0,
+    backgroundColor: 'red',
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: 800,
+    height: 400,
+    top: 0,
+    left: 0,
+    position: 'absolute',
+    opacity: 0.5
+  },
+
+  backdropView: {
+    marginTop: 50,
+    height: 200,
+    width: 500,
+    padding: 20,
+    flex: 0,
+    backgroundColor: 'rgba(250,250,250,0.7)',
+    borderRadius: 10
+  },
+});
 
 module.exports = SignIn;

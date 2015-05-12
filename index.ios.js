@@ -11,6 +11,7 @@ var {
   Text,
   NavigatorIOS,
   View,
+  TabBarIOS,
 } = React;
 
 var Main = require('./app/components/Main');
@@ -28,7 +29,7 @@ var AwesomeProject = React.createClass({
         style = {styles.container}
         initialRoute={{
           title: "Apples or Chuck Norris",
-          component: SignIn
+          component: Main
         }} />
     );
   }

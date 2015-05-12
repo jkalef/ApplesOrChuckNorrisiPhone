@@ -7,10 +7,12 @@ var {
   TouchableHighlight,
   PickerIOS,
   ScrollView,
+  Image
 } = React;
 
 var ShowPictures = require('./ShowPictures');
-
+var chuckNorrisPick = 'http://www.shiftgig.com/sites/default/files/article-images/13029_1411144363_1273945.png';
+var Tabs = require('./Tabs');
 
 var styles = React.StyleSheet.create ({
   text: {
@@ -19,39 +21,77 @@ var styles = React.StyleSheet.create ({
     textAlign: 'center',
   },
 
+  headerText: {
+    fontSize: 30,
+    marginTop: 30,
+    marginBottom: -10,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+
+  pickerView: {
+    textAlign: 'center',
+    marginBottom: -10,
+    marginTop: -5,
+    backgroundColor: 'red'
+  },
+
   container: {
-    padding: 20,
-    marginTop: 50
+    padding: 0,
+    marginTop: 30
   },
 
   buttonContainer: {
-    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
   },
 
   button: {
     marginTop: 10,
     height: 30,
-    flex: 1,
-    flexDirection: 'row',
-    borderRadius: 10,
-    justifyContent: 'center',
+    marginLeft: 10,
+    flex: 0,
     backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
+  },
+
+  useThisButton: {
+    marginTop: 10,
+    height: 30,
+    marginLeft: 10,
+    flex: 0,
+    backgroundColor: 'red',
   },
 
   buttonText: {
-    padding: 15,
+    padding: 20,
     color: 'white',
     alignSelf: 'center',
-    fontSize: 18
-  }
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+
+  backdropView: {
+    marginBottom: -10,
+    marginTop: -5,
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: 800,
+    height: 400,
+    top: 0,
+    left: 0,
+    position: 'absolute',
+    opacity: 0.2
+  },
 });
 
 var PickerItemIOS = PickerIOS.Item;
 
 var CategoryPicker = React.createClass({
   componentWillMount: function() {
-    // React.AlertIOS.alert(this.state.categories.length.toString())
     fetch(`http://4779340a.ngrok.com/api/v1/play/categories.json`)
       .then((response) => response.json())
       .then((responseData) => {
@@ -66,6 +106,7 @@ var CategoryPicker = React.createClass({
   renderPicker() {
     var categories = this.state.categories ? this.state.categories : [];;
     return (
+    <View>
       <PickerIOS
         selectedValue={this.state.categoryId}
         key={"picker-" + this.state.categories.length.toString()}
@@ -78,6 +119,7 @@ var CategoryPicker = React.createClass({
           )
         )}
       </PickerIOS>
+    </View>
     )
   },
 
@@ -88,12 +130,28 @@ var CategoryPicker = React.createClass({
   render: function() {
     return (
       <View>
-        <Text style={{textAlign: 'center'}}>Please pick a category:</Text>
-        {this.renderPicker()}
-        <TouchableHighlight onPress={this.selectCategory}>
-          <Text>Use this category</Text>
-        </TouchableHighlight>
-      </View>
+          <Image style={styles.backgroundImage} 
+                  source={{uri: chuckNorrisPick}}
+                  backgroundImage={Image.resizeMode.cover} />
+          <View style={styles.backdropView}>
+              <Text style={styles.headerText}>Select Game Mode:</Text>
+              {this.renderPicker()}
+              <View style={styles.buttonContainer}>
+                  <TouchableHighlight onPress={this.selectCategory} 
+                                      style={styles.useThisButton}>
+                      <Text style={styles.buttonText}>Use Selected Category</Text>
+                  </TouchableHighlight>
+                  <TouchableHighlight style={styles.button}
+                                      onPress={this.playRandom}>
+                      <Text style={styles.buttonText}>Random</Text>
+                  </TouchableHighlight>
+                   <TouchableHighlight style={styles.button}
+                                       onPress={this.playChuckNorris}>
+                      <Text style={styles.buttonText}>Chuck Norris</Text>
+                  </TouchableHighlight>
+               </View>
+            </View>
+        </View>
     );
   },
 });
@@ -123,23 +181,9 @@ var SelectGameMode = React.createClass ({
 
   render: function() {
     return (
-      <ScrollView style={styles.container}>
-        <Text style={styles.text}>Please Pick Your Game Mode:</Text>
-     
-      <CategoryPicker onPickCategory={this.pickCategories} />
-
-       <View style={styles.buttonContainer}>
-          <TouchableHighlight style={styles.button}
-                              onPress={this.playRandom}>
-            <Text style={styles.buttonText}>Random</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight style={styles.button}
-                              onPress={this.playChuckNorris}>
-            <Text style={styles.buttonText}>Chuck Norris</Text>
-          </TouchableHighlight>
-        </View>
-      </ScrollView>
+      <View style={styles.container}>
+        <CategoryPicker onPickCategory={this.pickCategories} />  
+      </View>
       );
     },
   });
