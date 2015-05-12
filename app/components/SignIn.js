@@ -1,5 +1,4 @@
 var React = require('react-native');
-
 var t = require('tcomb-form-native');
 var SelectGameMode = require('./SelectGameMode');
 
@@ -10,36 +9,30 @@ var {
   View, 
   TouchableHighlight,
   TextInput,
-  Navigator,
   AsyncStorage,
+  AlertIOS,
   Image
 } = React;
 
 var Form = t.form.Form;
-var pic = "http://cdn.inquisitr.com/wp-content/uploads/2012/09/Chuck-Norris-Slovakian-Bridge.jpg";
 
-var Gender = t.enums({
-  M: 'Male',
-  F: 'Female'
-});
-
-var Profile = t.struct({
-  age: t.maybe(t.Num),            
-  location: t.maybe(t.Str), 
-  gender: t.maybe(t.Str)
+var User = t.struct({            
+  email: t.Str, 
+  password: t.Str,   
 });
 
 var options = {
   auto: 'placeholders',
+  fields: {
+    password: {
+      password: true
+    },
+  }
 };
 
-var CreateProfile = React.createClass({
+var SignIn = React.createClass({
   componentWillMount: function() {
-    AsyncStorage.getItem('API_KEY')
-      .then((apikey) => {
-        this.setState({userKey: apikey})
-      })
-    },
+  },
 
 
   getInitialState: function() {
@@ -49,53 +42,63 @@ var CreateProfile = React.createClass({
 
   onPress: function () {
     var value = this.refs.form.getValue();
-    if (value) { 
-        fetch(`http://4779340a.ngrok.com/api/v1/profiles/${this.state.userKey}`, {
+    if (value) {  
+        fetch(`http://4779340a.ngrok.com/api/v1/sessions`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          profile: {
-            age: value.age,
-            location: value.location,
-            sex: value.gender
+          user: {
+            email: value.email,
+            password: value.password,
           }
         })
-      });
-    this.props.navigator.replace({
-      component: SelectGameMode
-    });
-    }
-  },
+      }).then((response) => response.json())
+        .then((responseData) => {
+            AsyncStorage.setItem('API_KEY', responseData.user.api_key)
+              .done();
+          //go to game mode component
+          this.props.navigator.push({
+              component: SelectGameMode
+          });
+        }).catch((error) => AlertIOS.alert(
+            'Sorry',
+            'Invalid Username/Password Combo',
+            [
+              {text: 'Try Again', onPress: () => console.log('Pressed')},
+            ]
+          ))       
+        }
+      },
 
   render: function() {
     return (
       <View style={styles.container}>
-      <Image style={styles.backgroundImage} 
-               source={{uri: pic}}
+       <Image style={styles.backgroundImage} 
+               source={{uri: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS1wKVVbbZKcMRpycAxggnSYCmWT1QViAxMRUfBaV6T-R2erfqH"}}
                backgroundImage={Image.resizeMode.cover} />
         <View style={styles.backdropView}>
-          <Form
-            ref="form"
-            type={Profile}
-            options={options}
-            value={Profile} >
-          </Form>
-          <View style={styles.buttonContainer}>
-            <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
-              <Text style={styles.buttonText}>Update Profile</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
+        <Form
+          ref="form"
+          type={User}
+          options={options}
+          value={User} >
+        </Form>
+
+          <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>Sign In</Text>
+          </TouchableHighlight>
+
+      </View>
       </View>
     );
   }
 });
 
 var styles = React.StyleSheet.create({
- container: {
+container: {
     padding: 20,
     marginTop: 30,
     alignItems: 'center',
@@ -133,7 +136,7 @@ var styles = React.StyleSheet.create({
     marginTop: 5,
     marginLeft: 10,
     flex: 0,
-    backgroundColor: '#48BBEC',
+    backgroundColor: 'red',
   },
 
   backgroundImage: {
@@ -147,15 +150,14 @@ var styles = React.StyleSheet.create({
   },
 
   backdropView: {
-    marginTop: 30,
-    height: 250,
+    marginTop: 50,
+    height: 200,
     width: 500,
     padding: 20,
     flex: 0,
-    backgroundColor: 'rgba(250,250,250,0.9)',
+    backgroundColor: 'rgba(250,250,250,0.7)',
     borderRadius: 10
   },
 });
 
-
-module.exports = CreateProfile;
+module.exports = SignIn;

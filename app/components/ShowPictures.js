@@ -74,6 +74,8 @@ var ShowPictures = React.createClass ({
     var itemOne = this.state.itemOne.id
     var itemTwo = this.state.itemTwo.id
 
+    if (this.state.itemOne.category_id != 8) {
+
     fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`, {
       method: 'post',
       headers: {
@@ -89,6 +91,15 @@ var ShowPictures = React.createClass ({
         this.setState({itemOne: responseData.item_1,
                        itemTwo: responseData.item_2})
     });
+    } else {
+      AlertIOS.alert(
+            'I thought you knew...',
+            'Chuck Norris Always Wins...Please Try Again',
+            [
+              {text: 'Try Again', onPress: () => console.log('Pressed')},
+            ]
+          )
+    }
   },
 
 
