@@ -14,6 +14,8 @@ var SelectGameMode = require('./SelectGameMode');
 var Tabs = require('./Tabs');
 var CreateAccountForm = require('./CreateAccountForm');
 var SignIn = require('./SignIn');
+var SelectGameMode = require('./SelectGameMode');
+var CreateProfile = require('./CreateProfile');
 
 var styles = React.StyleSheet.create({
 

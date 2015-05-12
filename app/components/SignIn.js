@@ -86,11 +86,11 @@ var SignIn = React.createClass({
           options={options}
           value={User} >
         </Form>
-        <View style={styles.buttonContainer}>
+
           <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Sign In</Text>
           </TouchableHighlight>
-        </View>
+
       </View>
       </View>
     );
