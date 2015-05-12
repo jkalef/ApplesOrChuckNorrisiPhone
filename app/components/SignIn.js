@@ -9,7 +9,6 @@ var {
   View, 
   TouchableHighlight,
   TextInput,
-  Navigator,
   AsyncStorage,
   AlertIOS,
   Image
@@ -40,13 +39,6 @@ var SignIn = React.createClass({
     return{}
   },
 
-  //when the user submits an email and password, I want to do
-  //a couple things:
-  //1) I want to find the user by email:..if user doesn't exist, through an error
-  //2) I want to make sure that this password matches the email, and if not, through an error
-  //3) IF the email and password match, I want to fetch the authenticity token and store it
-  //4) in ASYNC Storage
-
 
   onPress: function () {
     var value = this.refs.form.getValue();
@@ -68,7 +60,7 @@ var SignIn = React.createClass({
             AsyncStorage.setItem('API_KEY', responseData.user.api_key)
               .done();
           //go to game mode component
-          this.props.navigator.replace({
+          this.props.navigator.push({
               component: SelectGameMode
           });
         }).catch((error) => AlertIOS.alert(

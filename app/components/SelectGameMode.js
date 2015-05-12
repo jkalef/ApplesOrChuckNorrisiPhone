@@ -7,7 +7,8 @@ var {
   TouchableHighlight,
   PickerIOS,
   ScrollView,
-  Image
+  Image,
+  Navigator
 } = React;
 
 var ShowPictures = require('./ShowPictures');
