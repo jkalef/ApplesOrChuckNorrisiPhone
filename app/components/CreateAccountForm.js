@@ -1,6 +1,10 @@
 var React = require('react-native');
 var t = require('tcomb-form-native');
 var CreateProfile = require('./CreateProfile');
+var SelectGameMode = require('./SelectGameMode');
+
+console.log('Loading CreateAccountForm');
+console.log('in create account form', SelectGameMode);
 
 var { 
   AppRegistry, 
@@ -11,7 +15,8 @@ var {
   TextInput,
   Navigator,
   AsyncStorage,
-  Image
+  Image,
+  AlertIOS
 } = React;
 
 var Form = t.form.Form;
@@ -26,12 +31,26 @@ var User = t.struct({
 var options = {
   auto: 'placeholders',
   fields: {
+    username: {
+      bufferDelay: 500,
+      autoCorrect: false,
+      autoFocus: true,
+    },
+    email: {
+      bufferDelay: 500,
+      autoCorrect: false,
+      autoFocus: true,
+    },
     password: {
-      password: true
+      bufferDelay: 500,
+      password: true,
+      autoCorrect: false
     },
     confirmPassword: {
-      password: true
-    }
+      bufferDelay: 500,
+      password: true,
+      autoCorrect: false
+    },
   }
 };
 
@@ -69,6 +88,7 @@ var CreateAccountForm = React.createClass({
         .then((responseData) => {
           AsyncStorage.setItem('API_KEY', responseData.user.api_key)
             .done();
+          console.log("<<<<<<<<<", SelectGameMode);
           this.props.navigator.replace({
             component: CreateProfile
           });

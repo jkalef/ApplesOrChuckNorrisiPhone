@@ -1,6 +1,7 @@
 var React = require('react-native');
 var t = require('tcomb-form-native');
 var SelectGameMode = require('./SelectGameMode');
+var Main = require('./Main');
 
 var { 
   AppRegistry, 
@@ -11,7 +12,8 @@ var {
   TextInput,
   AsyncStorage,
   AlertIOS,
-  Image
+  Image,
+  Navigator
 } = React;
 
 var Form = t.form.Form;
@@ -24,8 +26,16 @@ var User = t.struct({
 var options = {
   auto: 'placeholders',
   fields: {
+    email: {
+      bufferDelay: 500,
+      autoCorrect: false,
+      autoFocus: true,
+    },
+    
     password: {
-      password: true
+      bufferDelay: 500,
+      password: true,
+      autoCorrect: false
     },
   }
 };
@@ -41,6 +51,7 @@ var SignIn = React.createClass({
 
 
   onPress: function () {
+    var self = this;
     var value = this.refs.form.getValue();
     if (value) {  
         fetch(`http://4779340a.ngrok.com/api/v1/sessions`, {
@@ -59,7 +70,8 @@ var SignIn = React.createClass({
         .then((responseData) => {
             AsyncStorage.setItem('API_KEY', responseData.user.api_key)
               .done();
-          //go to game mode component
+          // go to game mode component
+          console.log("<<<<<<", Main);
           this.props.navigator.push({
               component: SelectGameMode
           });
@@ -77,8 +89,7 @@ var SignIn = React.createClass({
     return (
       <View style={styles.container}>
        <Image style={styles.backgroundImage} 
-               source={{uri: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS1wKVVbbZKcMRpycAxggnSYCmWT1QViAxMRUfBaV6T-R2erfqH"}}
-               backgroundImage={Image.resizeMode.cover} />
+               source={{uri: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS1wKVVbbZKcMRpycAxggnSYCmWT1QViAxMRUfBaV6T-R2erfqH"}} />
         <View style={styles.backdropView}>
         <Form
           ref="form"
@@ -86,7 +97,6 @@ var SignIn = React.createClass({
           options={options}
           value={User} >
         </Form>
-
           <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Sign In</Text>
           </TouchableHighlight>
@@ -124,12 +134,6 @@ container: {
     alignSelf: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-  },
-
-  buttonContainer: {
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    justifyContent: 'center',
   },
 
   button: {

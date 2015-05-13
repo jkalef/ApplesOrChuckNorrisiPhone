@@ -1,5 +1,7 @@
 var React = require('react-native');
 
+console.log('Loading SelectGameMode');
+
 var {
   View,
   Text,
@@ -13,9 +15,9 @@ var {
 
 var ShowPictures = require('./ShowPictures');
 var chuckNorrisPick = 'http://www.shiftgig.com/sites/default/files/article-images/13029_1411144363_1273945.png';
-var Tabs = require('./Tabs');
 
-var styles = React.StyleSheet.create ({
+
+var styles = React.StyleSheet.create({
   text: {
     marginBottom: 5,
     fontSize: 20,
@@ -143,11 +145,11 @@ var CategoryPicker = React.createClass({
                       <Text style={styles.buttonText}>Use Selected Category</Text>
                   </TouchableHighlight>
                   <TouchableHighlight style={styles.button}
-                                      onPress={this.playRandom}>
+                                      onPress={this.props.onPlayRandom}>
                       <Text style={styles.buttonText}>Random</Text>
                   </TouchableHighlight>
                    <TouchableHighlight style={styles.button}
-                                       onPress={this.playChuckNorris}>
+                                       onPress={this.props.onChuckNorris}>
                       <Text style={styles.buttonText}>Chuck Norris</Text>
                   </TouchableHighlight>
                </View>
@@ -158,7 +160,7 @@ var CategoryPicker = React.createClass({
 });
 
 
-var SelectGameMode = React.createClass ({
+var SelectGameMode = React.createClass({
   pickCategories: function(categoryId) {
     this.props.navigator.push({
       component: ShowPictures,
@@ -183,10 +185,12 @@ var SelectGameMode = React.createClass ({
   render: function() {
     return (
       <View style={styles.container}>
-        <CategoryPicker onPickCategory={this.pickCategories} />  
+        <CategoryPicker onPickCategory={this.pickCategories} 
+                        onPlayRandom={this.playRandom} 
+                        onChuckNorris={this.playChuckNorris} />  
       </View>
-      );
-    },
-  });
+    );
+  },
+});
 
 module.exports = SelectGameMode;
