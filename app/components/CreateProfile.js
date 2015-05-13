@@ -31,6 +31,21 @@ var Profile = t.struct({
 
 var options = {
   auto: 'placeholders',
+  autoCorrect: 'false',
+  fields: {
+    age: {
+      autoCorrect: false,
+      autoFocus: true,
+    },
+    location: {
+      autoCorrect: false,
+      bufferDelay: 500,
+    },
+    gender: {
+      autoCorrect: false,
+      bufferDelay: 500,
+    }
+  }
 };
 
 var CreateProfile = React.createClass({

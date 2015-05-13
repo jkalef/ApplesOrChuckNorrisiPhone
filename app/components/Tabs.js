@@ -10,9 +10,9 @@ var {
 
 var TabBarItemIOS = TabBarIOS.Item;
 
-var SelectGameMode = require("./SelectGameMode");
-var CreateProfile = require("./CreateProfile");
-var SignIn = require("./SignIn");
+// var SelectGameMode = require("./SelectGameMode");
+// var CreateProfile = require("./CreateProfile");
+// var SignIn = require("./SignIn");
 
 var Tabs = React.createClass({
 
