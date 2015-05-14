@@ -51,47 +51,7 @@ var ShowPictures = React.createClass ({
     var itemOne = this.state.itemOne.id
     var itemTwo = this.state.itemTwo.id
     //var otherItem = selectedItem.id == itemOne.id ? itemTwo : itemOne;
-
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemOne}/${itemTwo}/${this.state.userKey}`, {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ })
-    });
-
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({itemOne: responseData.item_1,
-                       itemTwo: responseData.item_2})
-    });
-  },
-
-
-  createComparisonTwo: function() {
-    var itemOne = this.state.itemOne.id
-    var itemTwo = this.state.itemTwo.id
-
-    if (this.state.itemOne.category_id != 8) {
-
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`, {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ })
-    });
-
-    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({itemOne: responseData.item_1,
-                       itemTwo: responseData.item_2})
-    });
-    } else {
+    if ((this.state.itemOne.category_id != 8) && (this.state.itemTwo.category_id == 8)) {
       AlertIOS.alert(
             'I thought you knew...',
             'Chuck Norris Always Wins...Please Try Again',
@@ -99,6 +59,53 @@ var ShowPictures = React.createClass ({
               {text: 'Try Again', onPress: () => console.log('Pressed')},
             ]
           )
+    } else {
+      fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemOne}/${itemTwo}/${this.state.userKey}`, {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ })
+      });
+
+      fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
+        .then((response) => response.json())
+        .then((responseData) => {
+          this.setState({itemOne: responseData.item_1,
+                         itemTwo: responseData.item_2})
+      });
+    }
+  },
+
+
+  createComparisonTwo: function() {
+    var itemOne = this.state.itemOne.id
+    var itemTwo = this.state.itemTwo.id
+
+    if ((this.state.itemTwo.category_id != 8) && (this.state.itemOne.category_id == 8)) {
+      AlertIOS.alert(
+            'I thought you knew...',
+            'Chuck Norris Always Wins...Please Try Again',
+            [
+              {text: 'Try Again', onPress: () => console.log('Pressed')},
+            ]
+          )
+    } else {
+      fetch(`http://4779340a.ngrok.com/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ })
+    });
+    fetch(`http://4779340a.ngrok.com/api/v1/play/show?${this.props.extension}.json`)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({itemOne: responseData.item_1,
+                       itemTwo: responseData.item_2})
+    });
     }
   },
 
