@@ -2,6 +2,7 @@ var React = require('react-native');
 
 var t = require('tcomb-form-native');
 var SelectGameMode = require('./SelectGameMode');
+var ngrokurl = require('../ngrok');
 
 var { 
   AppRegistry, 
@@ -65,7 +66,7 @@ var CreateProfile = React.createClass({
   onPress: function () {
     var value = this.refs.form.getValue();
     if (value) { 
-        fetch(`http://4779340a.ngrok.com/api/v1/profiles/${this.state.userKey}`, {
+        fetch(`${ngrokurl}/api/v1/profiles/${this.state.userKey}`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',

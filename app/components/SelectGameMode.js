@@ -15,7 +15,7 @@ var {
 
 var ShowPictures = require('./ShowPictures');
 var chuckNorrisPick = 'http://www.shiftgig.com/sites/default/files/article-images/13029_1411144363_1273945.png';
-
+var ngrokurl = require('../ngrok');
 
 var styles = React.StyleSheet.create({
   text: {
@@ -95,7 +95,7 @@ var PickerItemIOS = PickerIOS.Item;
 
 var CategoryPicker = React.createClass({
   componentWillMount: function() {
-    fetch(`http://4779340a.ngrok.com/api/v1/play/categories.json`)
+    fetch(`${ngrokurl}/api/v1/play/categories.json`)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({categories: responseData.categories});

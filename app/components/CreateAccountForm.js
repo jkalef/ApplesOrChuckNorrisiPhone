@@ -2,6 +2,7 @@ var React = require('react-native');
 var t = require('tcomb-form-native');
 var CreateProfile = require('./CreateProfile');
 var SelectGameMode = require('./SelectGameMode');
+var ngrokurl = require('../ngrok');
 
 console.log('Loading CreateAccountForm');
 console.log('in create account form', SelectGameMode);
@@ -70,7 +71,7 @@ var CreateAccountForm = React.createClass({
   onPress: function () {
     var value = this.refs.form.getValue();
     if (value) { 
-        fetch(`http://4779340a.ngrok.com/api/v1/users`, {
+        fetch(`${ngrokurl}/api/v1/users`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',

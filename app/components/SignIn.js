@@ -2,6 +2,7 @@ var React = require('react-native');
 var t = require('tcomb-form-native');
 var SelectGameMode = require('./SelectGameMode');
 var Main = require('./Main');
+var ngrokurl = require('../ngrok');
 
 var { 
   AppRegistry, 
@@ -54,7 +55,7 @@ var SignIn = React.createClass({
     var self = this;
     var value = this.refs.form.getValue();
     if (value) {  
-        fetch(`http://4779340a.ngrok.com/api/v1/sessions`, {
+        fetch(`${ngrokurl}/api/v1/sessions`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
