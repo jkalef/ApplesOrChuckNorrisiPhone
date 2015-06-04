@@ -11,6 +11,7 @@ var {
   AsyncStorage
 } = React;
 
+var chuckNorris = "Chuck Norris";
 
 var PictureOption = React.createClass ({
   _onPress: function() {
@@ -47,11 +48,10 @@ var ShowPictures = React.createClass ({
       });
   },
 
-
   createComparisonOne: function() {
     var itemOne = this.state.itemOne.id
     var itemTwo = this.state.itemTwo.id
-    if ((this.state.itemOne.category_id != 8) && (this.state.itemTwo.category_id == 8)) {
+    if ((this.state.itemOne.title != chuckNorris) && (this.state.itemTwo.title == chuckNorris)) {
       AlertIOS.alert(
             'I thought you knew...',
             'Chuck Norris Always Wins...Please Try Again',
@@ -85,7 +85,7 @@ var ShowPictures = React.createClass ({
     var itemOne = this.state.itemOne.id
     var itemTwo = this.state.itemTwo.id
 
-    if ((this.state.itemTwo.category_id != 8) && (this.state.itemOne.category_id == 8)) {
+    if ((this.state.itemTwo.title != chuckNorris) && (this.state.itemOne.title == chuckNorris)) {
       AlertIOS.alert(
             'I thought you knew...',
             'Chuck Norris Always Wins...Please Try Again',
