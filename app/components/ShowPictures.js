@@ -30,15 +30,15 @@ var PictureOption = React.createClass ({
 
 var ShowPictures = React.createClass ({
   getInitialState: function() {
-    AsyncStorage.getItem('API_KEY')
-      .then((apikey) => {
-        this.setState({userKey: apikey})
-    })
+    //use this when we add the user authentication feature
+    // AsyncStorage.getItem('API_KEY')
+    //   .then((apikey) => {
+    //     this.setState({userKey: apikey})
+    // })
     return {}
   },
 
   componentWillMount: function() {
-    //console.log('mounting')
     fetch(`${ngrokurl}/api/v1/play/show?${this.props.extension}.json`)
       .then((response) => response.json())
       .then((responseData) => {
@@ -51,7 +51,6 @@ var ShowPictures = React.createClass ({
   createComparisonOne: function() {
     var itemOne = this.state.itemOne.id
     var itemTwo = this.state.itemTwo.id
-    //var otherItem = selectedItem.id == itemOne.id ? itemTwo : itemOne;
     if ((this.state.itemOne.category_id != 8) && (this.state.itemTwo.category_id == 8)) {
       AlertIOS.alert(
             'I thought you knew...',
@@ -61,7 +60,9 @@ var ShowPictures = React.createClass ({
             ]
           )
     } else {
-      fetch(`${ngrokurl}/api/v1/play/show/${this.props.extension}/${itemOne}/${itemTwo}/${this.state.userKey}`, {
+      fetch(`${ngrokurl}/api/v1/play/show/${this.props.extension}/${itemOne}/${itemTwo}`, {
+      //use this when we add the user authentication feature
+      // fetch(`${ngrokurl}/api/v1/play/show/${this.props.extension}/${itemOne}/${itemTwo}/${this.state.userKey}`  
         method: 'post',
         headers: {
           'Accept': 'application/json',
@@ -93,7 +94,9 @@ var ShowPictures = React.createClass ({
             ]
           )
     } else {
-      fetch(`${ngrokurl}/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`, {
+      fetch(`${ngrokurl}/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}`, {
+      // use this when we add the user authentication feature
+      // fetch(`${ngrokurl}/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -137,14 +140,14 @@ var ShowPictures = React.createClass ({
 
 var styles = React.StyleSheet.create ({
   wrapper: {
-    flex: 1,
     alignItems: 'center'
   },
 
   imageContainer: {
+    marginTop: 20,
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'stretch'
   },
 
   text: {

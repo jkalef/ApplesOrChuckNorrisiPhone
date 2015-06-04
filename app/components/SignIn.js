@@ -89,20 +89,20 @@ var SignIn = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-       <Image style={styles.backgroundImage} 
-               source={{uri: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS1wKVVbbZKcMRpycAxggnSYCmWT1QViAxMRUfBaV6T-R2erfqH"}} />
-        <View style={styles.backdropView}>
-        <Form
-          ref="form"
-          type={User}
-          options={options}
-          value={User} >
-        </Form>
-          <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Sign In</Text>
-          </TouchableHighlight>
+         <Image style={styles.backgroundImage} 
+                 source={{uri: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS1wKVVbbZKcMRpycAxggnSYCmWT1QViAxMRUfBaV6T-R2erfqH"}} />
+          <View style={styles.backdropView}>
+          <Form
+            ref="form"
+            type={User}
+            options={options}
+            value={User} >
+          </Form>
+            <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
+              <Text style={styles.buttonText}>Sign In</Text>
+            </TouchableHighlight>
 
-      </View>
+        </View>
       </View>
     );
   }

@@ -1,1 +1,1 @@
-module.exports = 'http://4779340a.ngrok.com';
+module.exports = 'https://radiant-hollows-9011.herokuapp.com';

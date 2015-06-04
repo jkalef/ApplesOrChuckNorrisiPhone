@@ -51,19 +51,16 @@ var styles = React.StyleSheet.create({
   },
 
   button: {
-    marginTop: 10,
-    height: 30,
-    marginLeft: 10,
+    marginLeft: 5,
     flex: 0,
     backgroundColor: '#48BBEC',
+    width: 200,
   },
 
   useThisButton: {
-    marginTop: 10,
-    height: 30,
-    marginLeft: 10,
     flex: 0,
     backgroundColor: 'red',
+    alignItems: 'flex-start',
   },
 
   buttonText: {
@@ -146,11 +143,7 @@ var CategoryPicker = React.createClass({
                   </TouchableHighlight>
                   <TouchableHighlight style={styles.button}
                                       onPress={this.props.onPlayRandom}>
-                      <Text style={styles.buttonText}>Random</Text>
-                  </TouchableHighlight>
-                   <TouchableHighlight style={styles.button}
-                                       onPress={this.props.onChuckNorris}>
-                      <Text style={styles.buttonText}>Chuck Norris</Text>
+                      <Text style={styles.buttonText}>Play Random</Text>
                   </TouchableHighlight>
                </View>
             </View>
