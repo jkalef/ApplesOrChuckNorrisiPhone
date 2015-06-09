@@ -8,10 +8,31 @@ var {
   Navigator,
   TouchableHighlight,
   AlertIOS,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicatorIOS
 } = React;
 
 var chuckNorris = "Chuck Norris";
+
+// var addLoadingGraphic = React.createClass ({
+//   render: function() {
+//     return (
+//       <View style={styles.wrapper}>
+//         <ActivityIndicatorIOS style={{alignSelf: 'center', marginTop: 150}} size="large" />
+//       </View>
+//       )
+//   }
+// });
+
+// var removeLoadingGraphic = React.createClass ({
+//   getInitialState: function() {
+//     return{}
+//   },
+
+//   render: function() {
+//     return <View />
+//   }
+// });
 
 var PictureOption = React.createClass ({
   _onPress: function() {
@@ -46,6 +67,13 @@ var ShowPictures = React.createClass ({
         this.setState({itemOne: responseData.item_1,
                        itemTwo: responseData.item_2})
       });
+     AlertIOS.alert(
+      'How To Play:',
+      'Click on the picture you like best!',
+        [
+          {text: 'Ready!', onPress: () => console.log('Pressed')},
+        ]
+      )
   },
 
   createComparisonOne: function() {
@@ -114,7 +142,6 @@ var ShowPictures = React.createClass ({
   },
 
 
-
   renderImages: function() {
     if (this.state.itemOne && this.state.itemTwo) {
       return (
@@ -128,10 +155,17 @@ var ShowPictures = React.createClass ({
     }
   },
 
+
   render: function() {
+    var content;
+    if (this.state.itemOne && this.state.itemTwo) {
+      content = this.renderImages();
+    } else {
+      content = <ActivityIndicatorIOS style={{alignSelf: 'center', marginTop: 150}} size="large" />;     
+    }
     return (
       <View style={styles.wrapper}>
-          {this.renderImages()}
+          {content}
       </View>
       );
   },

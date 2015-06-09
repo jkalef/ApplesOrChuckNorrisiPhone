@@ -10,7 +10,7 @@ var {
   PickerIOS,
   ScrollView,
   Image,
-  Navigator
+  Navigator,
 } = React;
 
 var ShowPictures = require('./ShowPictures');
