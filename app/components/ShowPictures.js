@@ -122,6 +122,7 @@ var ShowPictures = React.createClass ({
             ]
           )
     } else {
+      this.state.isLoading == true
       fetch(`${ngrokurl}/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}`, {
       // use this when we add the user authentication feature
       // fetch(`${ngrokurl}/api/v1/play/show/${this.props.extension}/${itemTwo}/${itemOne}/${this.state.userKey}`
@@ -138,6 +139,7 @@ var ShowPictures = React.createClass ({
         this.setState({itemOne: responseData.item_1,
                        itemTwo: responseData.item_2})
     });
+    this.stateisLoading == false
     }
   },
 
@@ -158,10 +160,10 @@ var ShowPictures = React.createClass ({
 
   render: function() {
     var content;
-    if (this.state.itemOne && this.state.itemTwo) {
-      content = this.renderImages();
-    } else {
+    if (this.state.isLoading) {
       content = <ActivityIndicatorIOS style={{alignSelf: 'center', marginTop: 150}} size="large" />;     
+    } else {
+      content = this.renderImages();
     }
     return (
       <View style={styles.wrapper}>

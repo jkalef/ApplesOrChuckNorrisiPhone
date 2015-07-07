@@ -155,10 +155,17 @@ var CategoryPicker = React.createClass({
 
 var SelectGameMode = React.createClass({
   pickCategories: function(categoryId) {
-    this.props.navigator.push({
-      component: ShowPictures,
-      passProps: {extension: 'category_id=' + categoryId.toString()}
-    })
+    if (categoryId != null) {
+      this.props.navigator.push({
+        component: ShowPictures,
+        passProps: {extension: 'category_id=' + categoryId.toString()}
+      })
+    } else {
+      this.props.navigator.push({
+        component: ShowPictures,
+        passProps: {extension: 'category_id=1'}
+      })
+    }
   },
 
   playRandom: function() {
@@ -168,19 +175,11 @@ var SelectGameMode = React.createClass({
     })
   },
 
-  playChuckNorris: function() {
-    this.props.navigator.push({
-      component: ShowPictures,
-      passProps: {extension: 'chuck_norris=true'}
-    })
-  },
-
   render: function() {
     return (
       <View style={styles.container}>
         <CategoryPicker onPickCategory={this.pickCategories} 
-                        onPlayRandom={this.playRandom} 
-                        onChuckNorris={this.playChuckNorris} />  
+                        onPlayRandom={this.playRandom} />  
       </View>
     );
   },
